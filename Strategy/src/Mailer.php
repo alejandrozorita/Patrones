@@ -45,7 +45,7 @@ class Mailer
 
     public function __construct($transport = 'smtp')
     {
-        $this->transport = $transport;
+        $this->transport = (new Transport($transport));
     }
 
 
@@ -92,7 +92,7 @@ class Mailer
 
     public function send($recipient, $subjetc, $body)
     {
-        return (new Transport($this->transport))->send($recipient, $subjetc, $body, $this);
+        return $this->transport->send($recipient, $subjetc, $body, $this);
     }
 
 

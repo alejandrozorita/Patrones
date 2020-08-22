@@ -45,9 +45,9 @@ class MailerTest extends TestCase
 
         $content = file_get_contents($filename);
 
-        $this->assertContains('Recipient: alzort@gmail.com', $content);
-        $this->assertContains('Subject: Asunto del mensaje', $content);
-        $this->assertContains('Body: Cuerpo del mensaje', $content);
+        $this->assertStringContainsString('Recipient: alzort@gmail.com', $content);
+        $this->assertStringContainsString('Subject: Asunto del mensaje', $content);
+        $this->assertStringContainsString('Body: Cuerpo del mensaje', $content);
     }
 
 
