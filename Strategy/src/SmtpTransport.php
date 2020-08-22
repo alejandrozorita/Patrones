@@ -7,23 +7,52 @@ use PHPMailer\PHPMailer\PHPMailer;
 class SmtpTransport extends Transport
 {
     /**
+     * @var
+     */
+    protected $host;
+
+    /**
+     * @var
+     */
+    protected $username;
+
+    /**
+     * @var
+     */
+    protected $password;
+
+    /**
+     * @var
+     */
+    protected $port;
+
+    public function __construct($host, $username, $password, $port)
+    {
+        $this->host = $host;
+        $this->username = $username;
+        $this->password = $password;
+        $this->port = $port;
+    }
+
+
+    /**
      * @param $recipient
      * @param $subjetc
      * @param $body
-     * @param  \Patrones\Strategy\Mailer  $mailer
+     * @param $sender
      *
      * @return bool
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function send($recipient, $subjetc, $body, Mailer $mailer)
+    public function send($recipient, $subjetc, $body, $sender)
     {
         $mail = new PHPMailer(true);         // Enable verbose debug output
         $mail->isSMTP();                                            // Send using SMTP
-        $mail->Host = $mailer->host;                    // Set the SMTP server to send through
+        $mail->Host = $this->host;                    // Set the SMTP server to send through
         $mail->SMTPAuth = true;                                   // Enable SMTP authentication
-        $mail->Username = $mailer->username;                     // SMTP username
-        $mail->Password = $mailer->password;                       // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port = 25;
+        $mail->Username = $this->username;                     // SMTP username
+        $mail->Password = $this->password;                       // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+        $mail->Port = $this->port;
 
         $mail->setFrom($mailer->sender);
         $mail->addAddress($recipient);     // Add a recipient

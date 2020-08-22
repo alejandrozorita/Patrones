@@ -9,18 +9,30 @@ namespace Patrones\Strategy;
  */
 class ArrayTransport extends Transport
 {
+    protected $sent = [];
+
+
     /**
      * @param $recipient
      * @param $subjetc
      * @param $body
-     * @param  \Patrones\Strategy\Mailer  $mailer
+     * @param $sender
      *
      * @return bool
      */
-    public function send($recipient, $subjetc, $body, Mailer $mailer)
+    public function send($recipient, $subjetc, $body, $sender)
     {
-        $mailer->sent[] = compact('recipient', 'subjetc', 'body');
+        $this->sent[] = compact('recipient', 'subjetc', 'body');
         return true;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getSent()
+    {
+        return $this->sent;
     }
 
 }

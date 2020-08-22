@@ -22,12 +22,12 @@ class MailerTest extends TestCase
     /** @test */
     public function it_stores_the_sent_emails_in_an_array()
     {
-        $mailer = new Mailer(new ArrayTransport());
+        $mailer = new Mailer($transport = new ArrayTransport());
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
 
-        $sent = $mailer->sent();
+        $sent = $transport->getSent();
         $this->assertCount(1, $sent);
         $this->assertSame('alzort@gmail.com', $sent[0]['recipient']);
         $this->assertSame('Asunto del mensaje', $sent[0]['subjetc']);
@@ -41,10 +41,9 @@ class MailerTest extends TestCase
         $filename = __DIR__ . '/../storage/test.txt';
         @unlink($filename);
 
-        $mailer = new Mailer(new FileTransport());
+        $mailer = new Mailer(new FileTransport($filename));
         $mailer->setSender('contacto@alejandrozorita.me');
 
-        $mailer->setFilename($filename);
         $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
 
         $content = file_get_contents($filename);
@@ -71,10 +70,7 @@ class MailerTest extends TestCase
         $inbox->empty();
 
         // - When
-        $mailer = new Mailer(new SmtpTransport());
-        $mailer->setHost('smtp.mailtrap.io');
-        $mailer->setUsername('bd21d8648628c1');
-        $mailer->setPassword('916c2f94ab4b8b');
+        $mailer = new Mailer(new SmtpTransport('smtp.mailtrap.io', 'bd21d8648628c1', '916c2f94ab4b8b', 25));
         $mailer->setSender('contacto@alejandrozorita.me');
         $sent = $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
 

@@ -4,16 +4,23 @@ namespace Patrones\Strategy;
 
 class FileTransport extends Transport
 {
+    protected $filename;
+
+    public function __construct($filename)
+    {
+        $this->filename = $filename;
+    }
+
 
     /**
      * @param $recipient
      * @param $subjetc
      * @param $body
-     * @param  \Patrones\Strategy\Mailer  $mailer
+     * @param $sender
      *
      * @return bool|int
      */
-    public function send($recipient, $subjetc, $body, Mailer $mailer)
+    public function send($recipient, $subjetc, $body, $sender)
     {
         $data = [
           'New Email',
@@ -22,7 +29,7 @@ class FileTransport extends Transport
           "Body: {$body}",
         ];
 
-        return file_put_contents($mailer->filename, "\n\n" . implode("\n", $data), FILE_APPEND);
+        return file_put_contents($this->filename, "\n\n" . implode("\n", $data), FILE_APPEND);
     }
 
 }
