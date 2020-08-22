@@ -2,8 +2,6 @@
 
 namespace Patrones\Strategy;
 
-use PHPMailer\PHPMailer\PHPMailer;
-
 class Mailer
 {
 
@@ -43,9 +41,9 @@ class Mailer
     public $password;
 
 
-    public function __construct($transport = 'smtp')
+    public function __construct(Transport $transport)
     {
-        $this->transport = (new Transport($transport));
+        $this->transport = $transport;
     }
 
 
@@ -74,6 +72,7 @@ class Mailer
     {
         $this->password = $password;
     }
+
 
     /**
      * @param  string  $filename

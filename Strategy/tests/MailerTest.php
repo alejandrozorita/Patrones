@@ -3,6 +3,7 @@
 namespace Patrones\Strategy\Tests;
 
 use Patrones\Strategy\Mailer;
+use Patrones\Strategy\Transport;
 use StephaneCoinon\Mailtrap\Client;
 use StephaneCoinon\Mailtrap\Inbox;
 use StephaneCoinon\Mailtrap\Model;
@@ -18,7 +19,7 @@ class MailerTest extends TestCase
     /** @test */
     public function it_stores_the_sent_emails_in_an_array()
     {
-        $mailer = new Mailer('array');
+        $mailer = new Mailer(new Transport('array'));
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
@@ -37,7 +38,7 @@ class MailerTest extends TestCase
         $filename = __DIR__ . '/../storage/test.txt';
         @unlink($filename);
 
-        $mailer = new Mailer('file');
+        $mailer = new Mailer(new Transport('file'));
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $mailer->setFilename($filename);
@@ -67,7 +68,7 @@ class MailerTest extends TestCase
         $inbox->empty();
 
         // - When
-        $mailer = new Mailer('smtp');
+        $mailer = new Mailer(new Transport('smtp'));
         $mailer->setHost('smtp.mailtrap.io');
         $mailer->setUsername('bd21d8648628c1');
         $mailer->setPassword('916c2f94ab4b8b');
