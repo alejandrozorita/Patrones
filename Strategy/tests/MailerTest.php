@@ -15,6 +15,22 @@ use StephaneCoinon\Mailtrap\Model;
 class MailerTest extends TestCase
 {
 
+    /** @test */
+    function it_stores_the_sent_emails_in_an_array()
+    {
+        $mailer = new Mailer;
+        $mailer->setSender('contacto@alejandrozorita.me');
+
+        $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
+
+        $sent = $mailer->sent();
+        $this->assertCount(1, $sent);
+        $this->assertSame('alzort@gmail.com', $sent[0]['recipient']);
+        $this->assertSame('Asunto del mensaje', $sent[0]['subjetc']);
+        $this->assertSame('Cuerpo del mensaje', $sent[0]['body']);
+
+    }
+
     /** @test
      */
     public function it_sends_emails_using_smtp()
