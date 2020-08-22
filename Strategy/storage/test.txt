@@ -1,0 +1,6 @@
+
+
+New Email
+Recipient: alzort@gmail.com
+Subject: Asunto del mensaje
+Body: Cuerpo del mensaje

@@ -34,11 +34,25 @@ class MailerTest extends TestCase
     /** @test */
     public function it_store_the_sent_emails_in_a_log_file()
     {
+        $filename = __DIR__ . '/../storage/test.txt';
+        @unlink($filename);
 
+        $mailer = new Mailer('file');
+        $mailer->setSender('contacto@alejandrozorita.me');
+
+        $mailer->setFilename($filename);
+        $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
+
+        $content = file_get_contents($filename);
+
+        $this->assertContains('Recipient: alzort@gmail.com', $content);
+        $this->assertContains('Subject: Asunto del mensaje', $content);
+        $this->assertContains('Body: Cuerpo del mensaje', $content);
     }
 
-        /** @test
-         */
+
+    /** @test
+     */
     public function it_sends_emails_using_smtp()
     {
         // - Give / Setup
@@ -52,11 +66,15 @@ class MailerTest extends TestCase
         // Fetch an inbox by its id
         $inbox = Inbox::find(1033255);
 
-        //$inbox->empty();
+        $inbox->empty();
 
         // - When
 
         $mailer = new Mailer('smtp');
+        $mailer->setHost('smtp.mailtrap.io');
+        $mailer->setUsername('bd21d8648628c1');
+        $mailer->setPassword('916c2f94ab4b8b');
+
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $sent = $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");

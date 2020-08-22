@@ -7,17 +7,80 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Mailer
 {
 
+    /**
+     * @var
+     */
     private $sender;
+
+    /**
+     * @var array
+     */
     private $sent = [];
+
     /**
      * @var mixed|string
      */
     private $transport;
 
+    /**
+     * @var string
+     */
+    private $filename;
+
+    /**
+     * @var
+     */
+    private $host;
+
+    /**
+     * @var
+     */
+    private $username;
+
+    /**
+     * @var
+     */
+    private $password;
+
 
     public function __construct($transport = 'smtp')
     {
         $this->transport = $transport;
+    }
+
+
+    /**
+     * @param  mixed  $host
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
+
+
+    /**
+     * @param  mixed  $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+
+    /**
+     * @param  mixed  $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param  string  $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
     }
 
 
@@ -29,13 +92,13 @@ class Mailer
 
     public function send($recipient, $subjetc, $body)
     {
-        if($this->transport == 'smtp') {
+        if ($this->transport == 'smtp') {
             $mail = new PHPMailer(true);         // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host = 'smtp.mailtrap.io';                    // Set the SMTP server to send through
+            $mail->Host = $this->host;                    // Set the SMTP server to send through
             $mail->SMTPAuth = true;                                   // Enable SMTP authentication
-            $mail->Username = 'bd21d8648628c1';                     // SMTP username
-            $mail->Password = '916c2f94ab4b8b';                       // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Username = $this->username;                     // SMTP username
+            $mail->Password = $this->password;                       // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port = 25;
 
             $mail->setFrom($this->sender);
@@ -47,10 +110,20 @@ class Mailer
             return $mail->send();
         }
 
-        if($this->transport == 'array') {
+        if ($this->transport == 'array') {
             $this->sent[] = compact('recipient', 'subjetc', 'body');
         }
 
+        if ($this->transport == 'file') {
+            $data = [
+              'New Email',
+              "Recipient: {$recipient}",
+              "Subject: {$subjetc}",
+              "Body: {$body}",
+            ];
+
+            file_put_contents($this->filename, "\n\n" . implode("\n", $data), FILE_APPEND);
+        }
     }
 
 
