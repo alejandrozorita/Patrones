@@ -59,24 +59,19 @@ class MailerTest extends TestCase
 
         // Instantiate Mailtrap API client
         $client = new Client('686b71c5d4181bb5c5c3342047b71a46');
-
         // Boot API models
         Model::boot($client);
-
         // Fetch an inbox by its id
         $inbox = Inbox::find(1033255);
 
         $inbox->empty();
 
         // - When
-
         $mailer = new Mailer('smtp');
         $mailer->setHost('smtp.mailtrap.io');
         $mailer->setUsername('bd21d8648628c1');
         $mailer->setPassword('916c2f94ab4b8b');
-
         $mailer->setSender('contacto@alejandrozorita.me');
-
         $sent = $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
 
         // - Then / Asserts

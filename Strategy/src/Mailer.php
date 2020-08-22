@@ -10,12 +10,12 @@ class Mailer
     /**
      * @var
      */
-    private $sender;
+    public $sender;
 
     /**
      * @var array
      */
-    private $sent = [];
+    public $sent = [];
 
     /**
      * @var mixed|string
@@ -25,22 +25,22 @@ class Mailer
     /**
      * @var string
      */
-    private $filename;
+    public $filename;
 
     /**
      * @var
      */
-    private $host;
+    public $host;
 
     /**
      * @var
      */
-    private $username;
+    public $username;
 
     /**
      * @var
      */
-    private $password;
+    public $password;
 
 
     public function __construct($transport = 'smtp')
@@ -92,38 +92,7 @@ class Mailer
 
     public function send($recipient, $subjetc, $body)
     {
-        if ($this->transport == 'smtp') {
-            $mail = new PHPMailer(true);         // Enable verbose debug output
-            $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host = $this->host;                    // Set the SMTP server to send through
-            $mail->SMTPAuth = true;                                   // Enable SMTP authentication
-            $mail->Username = $this->username;                     // SMTP username
-            $mail->Password = $this->password;                       // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port = 25;
-
-            $mail->setFrom($this->sender);
-            $mail->addAddress($recipient);     // Add a recipient
-            $mail->Subject = $subjetc;
-            $mail->Body = $body;
-            $mail->AltBody = $body;
-
-            return $mail->send();
-        }
-
-        if ($this->transport == 'array') {
-            $this->sent[] = compact('recipient', 'subjetc', 'body');
-        }
-
-        if ($this->transport == 'file') {
-            $data = [
-              'New Email',
-              "Recipient: {$recipient}",
-              "Subject: {$subjetc}",
-              "Body: {$body}",
-            ];
-
-            file_put_contents($this->filename, "\n\n" . implode("\n", $data), FILE_APPEND);
-        }
+        return (new Transport($this->transport))->send($recipient, $subjetc, $body, $this);
     }
 
 
