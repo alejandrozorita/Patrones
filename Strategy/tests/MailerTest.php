@@ -4,8 +4,8 @@ namespace Patrones\Strategy\Tests;
 
 use Patrones\Strategy\Mailer;
 use StephaneCoinon\Mailtrap\Client;
-use StephaneCoinon\Mailtrap\Model;
 use StephaneCoinon\Mailtrap\Inbox;
+use StephaneCoinon\Mailtrap\Model;
 
 /**
  * Class MailerTest
@@ -15,8 +15,9 @@ use StephaneCoinon\Mailtrap\Inbox;
 class MailerTest extends TestCase
 {
 
-    /** @test */
-    function it_sends_emails_using_smtp()
+    /** @test
+     */
+    public function it_sends_emails_using_smtp()
     {
         // - Give / Setup
 
@@ -40,11 +41,10 @@ class MailerTest extends TestCase
         // Get the last (newest) message in an inbox
         $newestMessage = $inbox->lastMessage();
 
-
         $this->assertNotNull($newestMessage);
         $this->assertSame(['alzort@gmail.com'], $newestMessage->recipientEmails());
         $this->assertSame('Asunto del mensaje', $newestMessage->subject());
-        $this->assertSame('Cuerpo del mensaje', $newestMessage->body());
+        $this->assertSame('Cuerpo del mensaje', trim($newestMessage->htmlBody()));
         $this->assertTrue($sent);
     }
 
