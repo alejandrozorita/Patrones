@@ -1,7 +1,12 @@
 <?php
 
-namespace Patrones\Strategy\Test;
+namespace Patrones\Strategy\Tests;
 
+/**
+ * Class MailerTest
+ *
+ * @package Patrones\Strategy\Test
+ */
 class MailerTest extends TestCase
 {
 

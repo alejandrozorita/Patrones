@@ -1,6 +1,6 @@
 <?php
 
-namespace Patrones\Strategy\Test;
+namespace Patrones\Strategy\Tests;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
