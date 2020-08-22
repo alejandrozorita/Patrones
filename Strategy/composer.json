@@ -1,23 +1,30 @@
 {
-    "name": "patrones/strategy",
-    "description": "Ejemplos del patron Strategy Pattern",
-    "type": "proyect",
-    "require-dev": {
-        "phpunit/phpunit": "^9.4@dev"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Alejandro Zorita Hernández",
-            "email": "contacto@alejandrozorita.me"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {},
-    "autoload" : {
-        "psr-4" : {"Patrones\\Strategy\\" :  "src/"}
-    },
-    "autoload-dev": {
-        "psr-4" : {"Patrones\\Strategy\\Tests\\" :  "tests/"}
+  "name": "patrones/strategy",
+  "description": "Ejemplos del patron Strategy Pattern",
+  "type": "proyect",
+  "require": {
+    "phpmailer/phpmailer": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.4@dev",
+    "stephanecoinon/mailtrap": "dev-master"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alejandro Zorita Hernández",
+      "email": "contacto@alejandrozorita.me"
     }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Patrones\\Strategy\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Patrones\\Strategy\\Tests\\": "tests/"
+    }
+  }
 }
