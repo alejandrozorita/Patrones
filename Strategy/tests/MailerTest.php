@@ -16,9 +16,9 @@ class MailerTest extends TestCase
 {
 
     /** @test */
-    function it_stores_the_sent_emails_in_an_array()
+    public function it_stores_the_sent_emails_in_an_array()
     {
-        $mailer = new Mailer;
+        $mailer = new Mailer('array');
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
@@ -28,11 +28,17 @@ class MailerTest extends TestCase
         $this->assertSame('alzort@gmail.com', $sent[0]['recipient']);
         $this->assertSame('Asunto del mensaje', $sent[0]['subjetc']);
         $this->assertSame('Cuerpo del mensaje', $sent[0]['body']);
+    }
+
+
+    /** @test */
+    public function it_store_the_sent_emails_in_a_log_file()
+    {
 
     }
 
-    /** @test
-     */
+        /** @test
+         */
     public function it_sends_emails_using_smtp()
     {
         // - Give / Setup
@@ -46,9 +52,11 @@ class MailerTest extends TestCase
         // Fetch an inbox by its id
         $inbox = Inbox::find(1033255);
 
+        //$inbox->empty();
+
         // - When
 
-        $mailer = new Mailer;
+        $mailer = new Mailer('smtp');
         $mailer->setSender('contacto@alejandrozorita.me');
 
         $sent = $mailer->send('alzort@gmail.com', "Asunto del mensaje", "Cuerpo del mensaje");
