@@ -44,6 +44,7 @@ class Transport
 
         if ($this->type == 'array') {
             $mailer->sent[] = compact('recipient', 'subjetc', 'body');
+            return true;
         }
 
         if ($this->type == 'file') {
