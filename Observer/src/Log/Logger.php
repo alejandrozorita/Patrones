@@ -1,6 +1,6 @@
 <?php
 
-namespace Patrones\Observer;
+namespace Patrones\Observer\Log;
 
 class Logger
 {

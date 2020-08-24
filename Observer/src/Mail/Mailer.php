@@ -14,7 +14,7 @@ class Mailer
     /**
      * @var mixed|string
      */
-    private $transport;
+    protected $transport;
 
 
     public function __construct(Transport $transport)

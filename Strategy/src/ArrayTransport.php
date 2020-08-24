@@ -30,7 +30,7 @@ class ArrayTransport extends Transport
     /**
      * @return array
      */
-    public function getSent()
+    public function sent()
     {
         return $this->sent;
     }

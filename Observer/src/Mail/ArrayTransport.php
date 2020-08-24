@@ -22,7 +22,7 @@ class ArrayTransport extends Transport
      */
     public function send($recipient, $subjetc, $body, $sender)
     {
-        $this->sent[] = compact('recipient', 'subjetc', 'body');
+        $this->sent[] = compact('recipient','subjetc', 'body');
         return true;
     }
 
@@ -30,7 +30,7 @@ class ArrayTransport extends Transport
     /**
      * @return array
      */
-    public function getSent()
+    public function sent()
     {
         return $this->sent;
     }

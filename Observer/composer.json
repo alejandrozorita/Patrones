@@ -20,7 +20,8 @@
   "autoload": {
     "psr-4": {
       "Patrones\\Observer\\": "src/"
-    }
+    },
+    "files": ["src/helpers.php"]
   },
   "autoload-dev": {
     "psr-4": {
